@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+plan.md
+ai_sql_copilot.db
+frontend/node_modules/
+frontend/.next/
+local_postgres/
+data/
+datasets/
+*.zip
