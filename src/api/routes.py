@@ -1,5 +1,7 @@
 from dataclasses import asdict, is_dataclass
+import atexit
 import os
+import signal
 from typing import Optional
 
 from src.agents.sql_explanation_agent import SQLExplanationAgent
@@ -325,13 +327,38 @@ def create_app(schema: Optional[DatabaseSchema] = None):
         allow_headers=["*"],
     )
 
+    def _cleanup_previous_session():
+        try:
+            handlers.cleanup_session()
+        except Exception:
+            pass
+
+    def _cleanup_current_session():
+        try:
+            handlers.cleanup_session()
+        except Exception:
+            pass
+
     @app.on_event("startup")
     def cleanup_previous_session():
-        handlers.cleanup_session()
+        _cleanup_previous_session()
 
     @app.on_event("shutdown")
     def cleanup_current_session():
-        handlers.cleanup_session()
+        _cleanup_current_session()
+
+    atexit.register(_cleanup_current_session)
+
+    def _signal_cleanup(signum, frame):
+        _cleanup_current_session()
+        raise SystemExit(0)
+
+    for _signal in (getattr(signal, "SIGINT", None), getattr(signal, "SIGTERM", None)):
+        if _signal is not None:
+            try:
+                signal.signal(_signal, _signal_cleanup)
+            except Exception:
+                pass
 
     @app.get("/healthz")
     def healthz():

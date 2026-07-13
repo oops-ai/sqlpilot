@@ -1,0 +1,324 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 9 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 1360 >>
+stream
+BT
+/F1 11 Tf
+/F1 16 Tf
+1 0 0 1 48 744 Tm
+(SQLPilot Olist Smoke Test Report) Tj
+/F1 16 Tf
+/F1 11 Tf
+1 0 0 1 48 716 Tm
+(Dataset: olist_customers_dataset.csv -> imported_olist_customers_dataset) Tj
+/F1 11 Tf
+1 0 0 1 48 702 Tm
+(Imported rows: 99441) Tj
+/F1 11 Tf
+1 0 0 1 48 688 Tm
+(Imported columns: 5) Tj
+/F1 11 Tf
+1 0 0 1 48 674 Tm
+(Import duration: 1028 ms) Tj
+/F1 11 Tf
+1 0 0 1 48 660 Tm
+(Smoke queries executed: 23) Tj
+/F1 11 Tf
+1 0 0 1 48 646 Tm
+(Passed: 21 | Failed: 2) Tj
+/F1 11 Tf
+1 0 0 1 48 632 Tm
+(Safety checks: 4 / 4 blocked as expected) Tj
+/F1 11 Tf
+1 0 0 1 48 618 Tm
+(MCP checks: 4 / 4 passed) Tj
+/F1 11 Tf
+1 0 0 1 48 604 Tm
+(Cleanup removed: imported_olist_customers_dataset) Tj
+/F1 11 Tf
+/F1 11 Tf
+/F1 13 Tf
+1 0 0 1 48 562 Tm
+(Executive summary) Tj
+/F1 13 Tf
+/F1 11 Tf
+1 0 0 1 48 534 Tm
+(The app successfully imported the Olist CSV into PostgreSQL, answered most natural-) Tj
+/F1 11 Tf
+1 0 0 1 48 520 Tm
+(language questions from chat, passed all safety checks, passed all MCP checks, and) Tj
+/F1 11 Tf
+1 0 0 1 48 506 Tm
+(cleaned up the imported dataset after the run.) Tj
+/F1 11 Tf
+1 0 0 1 48 492 Tm
+(The two weak spots were: one ambiguous phrasing case for distinct cities, and one) Tj
+/F1 11 Tf
+1 0 0 1 48 478 Tm
+(location query where the generated SQL used a capitalization/variant that returned no) Tj
+/F1 11 Tf
+1 0 0 1 48 464 Tm
+(rows.) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 9 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 1530 >>
+stream
+BT
+/F1 11 Tf
+/F1 13 Tf
+1 0 0 1 48 744 Tm
+(What failed) Tj
+/F1 13 Tf
+/F1 11 Tf
+1 0 0 1 60 716 Tm
+(- list distinct customer_city values) Tj
+/F1 10 Tf
+1 0 0 1 66 702 Tm
+(  Result: Query blocked by safety checks.) Tj
+/F1 9 Tf
+1 0 0 1 66 688 Tm
+(  SQL: -- Generated SQL referenced unknown schema identifiers.) Tj
+/F1 11 Tf
+1 0 0 1 60 677 Tm
+(- show rows where customer_city is campinas) Tj
+/F1 10 Tf
+1 0 0 1 66 663 Tm
+(  Result: Query returned 0 rows.) Tj
+/F1 9 Tf
+1 0 0 1 66 649 Tm
+(  SQL: SELECT * FROM imported_olist_customers_dataset WHERE customer_city = 'Campinas') Tj
+/F1 9 Tf
+1 0 0 1 66 638 Tm
+(LIMIT 100;) Tj
+/F1 11 Tf
+/F1 11 Tf
+/F1 13 Tf
+1 0 0 1 48 599 Tm
+(Safety check results) Tj
+/F1 13 Tf
+/F1 10 Tf
+1 0 0 1 60 571 Tm
+(- DANGEROUS | blocked=True | UPDATE imported_olist_customers_dataset SET customer_state) Tj
+/F1 10 Tf
+1 0 0 1 60 557 Tm
+(= 'XX') Tj
+/F1 10 Tf
+1 0 0 1 60 543 Tm
+(- DANGEROUS | blocked=True | DELETE FROM imported_olist_customers_dataset) Tj
+/F1 10 Tf
+1 0 0 1 60 529 Tm
+(- DANGEROUS | blocked=True | DROP TABLE imported_olist_customers_dataset) Tj
+/F1 10 Tf
+1 0 0 1 60 515 Tm
+(- DANGEROUS | blocked=True | ALTER TABLE imported_olist_customers_dataset ADD COLUMN) Tj
+/F1 10 Tf
+1 0 0 1 60 501 Tm
+(smoke_test_flag TEXT) Tj
+/F1 11 Tf
+/F1 11 Tf
+/F1 13 Tf
+1 0 0 1 48 459 Tm
+(MCP checks) Tj
+/F1 13 Tf
+/F1 10 Tf
+1 0 0 1 60 431 Tm
+(- initialize: PASS) Tj
+/F1 10 Tf
+1 0 0 1 60 417 Tm
+(- tools/list: PASS) Tj
+/F1 10 Tf
+1 0 0 1 60 403 Tm
+(- get_schema: PASS) Tj
+/F1 10 Tf
+1 0 0 1 60 389 Tm
+(- query_history: PASS) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 9 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 3952 >>
+stream
+BT
+/F1 11 Tf
+/F1 13 Tf
+1 0 0 1 48 744 Tm
+(Query matrix) Tj
+/F1 13 Tf
+/F1 10 Tf
+1 0 0 1 60 716 Tm
+(01. PASS | rows=6 | show top 6 rows) Tj
+/F1 9 Tf
+1 0 0 1 66 702 Tm
+(    note: Query returned 6 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 691 Tm
+(02. PASS | rows=10 | show top 10 rows) Tj
+/F1 9 Tf
+1 0 0 1 66 677 Tm
+(    note: Query returned 10 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 666 Tm
+(03. PASS | rows=3 | show first 3 rows) Tj
+/F1 9 Tf
+1 0 0 1 66 652 Tm
+(    note: Query returned 3 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 641 Tm
+(04. PASS | rows=1 | show top 1 rows) Tj
+/F1 9 Tf
+1 0 0 1 66 627 Tm
+(    note: Query returned 1 row. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 616 Tm
+(05. PASS | rows=5 | show top 5 rows) Tj
+/F1 9 Tf
+1 0 0 1 66 602 Tm
+(    note: Query returned 5 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 591 Tm
+(06. PASS | rows=1 | count total customers) Tj
+/F1 9 Tf
+1 0 0 1 66 577 Tm
+(    note: Query returned 1 row. | view: Table) Tj
+/F1 10 Tf
+1 0 0 1 60 566 Tm
+(07. PASS | rows=100 | count rows by customer_state) Tj
+/F1 9 Tf
+1 0 0 1 66 552 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 541 Tm
+(08. PASS | rows=100 | count rows by customer_city) Tj
+/F1 9 Tf
+1 0 0 1 66 527 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 516 Tm
+(09. PASS | rows=27 | list distinct customer_state values) Tj
+/F1 9 Tf
+1 0 0 1 66 502 Tm
+(    note: Query returned 27 rows. | view: Table) Tj
+/F1 10 Tf
+1 0 0 1 60 491 Tm
+(10. FAIL | rows=0 | list distinct customer_city values) Tj
+/F1 9 Tf
+1 0 0 1 66 477 Tm
+(    note: Query blocked by safety checks.) Tj
+/F1 10 Tf
+1 0 0 1 60 466 Tm
+(11. PASS | rows=100 | show rows where customer_state is SP) Tj
+/F1 9 Tf
+1 0 0 1 66 452 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 441 Tm
+(12. PASS | rows=100 | show rows where customer_state is SC) Tj
+/F1 9 Tf
+1 0 0 1 66 427 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 416 Tm
+(13. PASS | rows=100 | show rows where customer_city is sao paulo) Tj
+/F1 9 Tf
+1 0 0 1 66 402 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 391 Tm
+(14. FAIL | rows=0 | show rows where customer_city is campinas) Tj
+/F1 9 Tf
+1 0 0 1 66 377 Tm
+(    note: Query returned 0 rows.) Tj
+/F1 10 Tf
+1 0 0 1 60 366 Tm
+(15. PASS | rows=17 | show rows where customer_zip_code_prefix is 14409) Tj
+/F1 9 Tf
+1 0 0 1 66 352 Tm
+(    note: Query returned 17 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 341 Tm
+(16. PASS | rows=100 | sort rows by customer_city) Tj
+/F1 9 Tf
+1 0 0 1 66 327 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 316 Tm
+(17. PASS | rows=100 | sort rows by customer_state descending) Tj
+/F1 9 Tf
+1 0 0 1 66 302 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 291 Tm
+(18. PASS | rows=100 | show customer_id and customer_city) Tj
+/F1 9 Tf
+1 0 0 1 66 277 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 266 Tm
+(19. PASS | rows=100 | show customer_unique_id and customer_state) Tj
+/F1 9 Tf
+1 0 0 1 66 252 Tm
+(    note: Query returned 100 rows. | view: Table) Tj
+/F1 10 Tf
+1 0 0 1 60 241 Tm
+(20. PASS | rows=100 | show customer_zip_code_prefix and customer_city) Tj
+/F1 9 Tf
+1 0 0 1 66 227 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 216 Tm
+(21. PASS | rows=27 | group rows by customer_state and count them) Tj
+/F1 9 Tf
+1 0 0 1 66 202 Tm
+(    note: Query returned 27 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 191 Tm
+(22. PASS | rows=100 | group rows by customer_city and count them) Tj
+/F1 9 Tf
+1 0 0 1 66 177 Tm
+(    note: Query returned 100 rows. | view: Bar chart) Tj
+/F1 10 Tf
+1 0 0 1 60 166 Tm
+(23. PASS | rows=5 | show the last 5 rows) Tj
+/F1 9 Tf
+1 0 0 1 66 152 Tm
+(    note: Query returned 5 rows. | view: Bar chart) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000127 00000 n 
+0000000253 00000 n 
+0000001665 00000 n 
+0000001791 00000 n 
+0000003373 00000 n 
+0000003499 00000 n 
+0000007503 00000 n 
+trailer
+<< /Size 10 /Root 1 0 R >>
+startxref
+7573
+%%EOF

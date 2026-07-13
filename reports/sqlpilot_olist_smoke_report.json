@@ -1,0 +1,311 @@
+{
+  "import": {
+    "table_name": "imported_olist_customers_dataset",
+    "row_count": 99441,
+    "column_count": 5,
+    "duration_ms": 1028
+  },
+  "queries": [
+    {
+      "query": "show top 6 rows",
+      "status": "PASS",
+      "row_count": 6,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 6;",
+      "summary": "Query returned 6 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 5,
+      "expected_exact": 6
+    },
+    {
+      "query": "show top 10 rows",
+      "status": "PASS",
+      "row_count": 10,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 10;",
+      "summary": "Query returned 10 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 3,
+      "expected_exact": 10
+    },
+    {
+      "query": "show first 3 rows",
+      "status": "PASS",
+      "row_count": 3,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 3;",
+      "summary": "Query returned 3 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 3,
+      "expected_exact": 3
+    },
+    {
+      "query": "show top 1 rows",
+      "status": "PASS",
+      "row_count": 1,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 1;",
+      "summary": "Query returned 1 row.",
+      "visualization": "Bar chart",
+      "duration_ms": 3,
+      "expected_exact": 1
+    },
+    {
+      "query": "show top 5 rows",
+      "status": "PASS",
+      "row_count": 5,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 5;",
+      "summary": "Query returned 5 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 3,
+      "expected_exact": 5
+    },
+    {
+      "query": "count total customers",
+      "status": "PASS",
+      "row_count": 1,
+      "sql": "SELECT COUNT(DISTINCT customer_id) AS total_customers FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 1 row.",
+      "visualization": "Table",
+      "duration_ms": 1948,
+      "expected_exact": null
+    },
+    {
+      "query": "count rows by customer_state",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT customer_id, customer_unique_id, customer_zip_code_prefix, customer_city, customer_state FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 2252,
+      "expected_exact": null
+    },
+    {
+      "query": "count rows by customer_city",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 60019,
+      "expected_exact": null
+    },
+    {
+      "query": "list distinct customer_state values",
+      "status": "PASS",
+      "row_count": 27,
+      "sql": "SELECT DISTINCT customer_state FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 27 rows.",
+      "visualization": "Table",
+      "duration_ms": 3572,
+      "expected_exact": null
+    },
+    {
+      "query": "list distinct customer_city values",
+      "status": "FAIL",
+      "row_count": 0,
+      "sql": "-- Generated SQL referenced unknown schema identifiers.",
+      "summary": "Query blocked by safety checks.",
+      "visualization": "",
+      "duration_ms": 2095,
+      "expected_exact": null
+    },
+    {
+      "query": "show rows where customer_state is SP",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT * FROM imported_olist_customers_dataset WHERE customer_state = 'SP' LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 3316,
+      "expected_exact": null
+    },
+    {
+      "query": "show rows where customer_state is SC",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 60015,
+      "expected_exact": null
+    },
+    {
+      "query": "show rows where customer_city is sao paulo",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 7789,
+      "expected_exact": null
+    },
+    {
+      "query": "show rows where customer_city is campinas",
+      "status": "FAIL",
+      "row_count": 0,
+      "sql": "SELECT * FROM imported_olist_customers_dataset WHERE customer_city = 'Campinas' LIMIT 100;",
+      "summary": "Query returned 0 rows.",
+      "visualization": "No visualization suggested for an empty result.",
+      "duration_ms": 1297,
+      "expected_exact": null
+    },
+    {
+      "query": "show rows where customer_zip_code_prefix is 14409",
+      "status": "PASS",
+      "row_count": 17,
+      "sql": "SELECT * FROM imported_olist_customers_dataset WHERE customer_zip_code_prefix = 14409 LIMIT 100;",
+      "summary": "Query returned 17 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 2306,
+      "expected_exact": null
+    },
+    {
+      "query": "sort rows by customer_city",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT customer_id, customer_unique_id, customer_zip_code_prefix, customer_city, customer_state FROM imported_olist_customers_dataset ORDER BY customer_city LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 2908,
+      "expected_exact": null
+    },
+    {
+      "query": "sort rows by customer_state descending",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT * FROM imported_olist_customers_dataset ORDER BY customer_state DESC LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 2647,
+      "expected_exact": null
+    },
+    {
+      "query": "show customer_id and customer_city",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 60016,
+      "expected_exact": null
+    },
+    {
+      "query": "show customer_unique_id and customer_state",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT customer_unique_id, customer_state FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Table",
+      "duration_ms": 5201,
+      "expected_exact": null
+    },
+    {
+      "query": "show customer_zip_code_prefix and customer_city",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT customer_zip_code_prefix, customer_city FROM imported_olist_customers_dataset LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 3082,
+      "expected_exact": null
+    },
+    {
+      "query": "group rows by customer_state and count them",
+      "status": "PASS",
+      "row_count": 27,
+      "sql": "SELECT customer_state, COUNT(*) FROM imported_olist_customers_dataset GROUP BY customer_state LIMIT 100;",
+      "summary": "Query returned 27 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 3930,
+      "expected_exact": null
+    },
+    {
+      "query": "group rows by customer_city and count them",
+      "status": "PASS",
+      "row_count": 100,
+      "sql": "SELECT customer_city, COUNT(*) AS num_customers FROM imported_olist_customers_dataset GROUP BY customer_city LIMIT 100;",
+      "summary": "Query returned 100 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 3361,
+      "expected_exact": null
+    },
+    {
+      "query": "show the last 5 rows",
+      "status": "PASS",
+      "row_count": 5,
+      "sql": "SELECT     customer_id,     customer_unique_id,     customer_zip_code_prefix,     customer_city,     customer_state FROM imported_olist_customers_dataset LIMIT 5;",
+      "summary": "Query returned 5 rows.",
+      "visualization": "Bar chart",
+      "duration_ms": 4,
+      "expected_exact": 5
+    }
+  ],
+  "safety": [
+    {
+      "sql": "UPDATE imported_olist_customers_dataset SET customer_state = 'XX'",
+      "safe": false,
+      "risk_level": "dangerous",
+      "warnings": [
+        "`UPDATE` changes data and is blocked in read-only mode."
+      ],
+      "requires_confirmation": true
+    },
+    {
+      "sql": "DELETE FROM imported_olist_customers_dataset",
+      "safe": false,
+      "risk_level": "dangerous",
+      "warnings": [
+        "`DELETE` changes data and is blocked in read-only mode."
+      ],
+      "requires_confirmation": true
+    },
+    {
+      "sql": "DROP TABLE imported_olist_customers_dataset",
+      "safe": false,
+      "risk_level": "dangerous",
+      "warnings": [
+        "`DROP` is destructive and requires explicit confirmation."
+      ],
+      "requires_confirmation": true
+    },
+    {
+      "sql": "ALTER TABLE imported_olist_customers_dataset ADD COLUMN smoke_test_flag TEXT",
+      "safe": false,
+      "risk_level": "dangerous",
+      "warnings": [
+        "`ALTER` is destructive and requires explicit confirmation."
+      ],
+      "requires_confirmation": true
+    }
+  ],
+  "mcp": [
+    {
+      "tool": "initialize",
+      "ok": true
+    },
+    {
+      "tool": "tools/list",
+      "ok": true,
+      "tool_count": 10
+    },
+    {
+      "tool": "get_schema",
+      "ok": true
+    },
+    {
+      "tool": "query_history",
+      "ok": true
+    }
+  ],
+  "cleanup": {
+    "removed": [
+      "imported_olist_customers_dataset"
+    ],
+    "registry_remaining": [],
+    "duration_ms": 4
+  },
+  "summary": {
+    "total_duration_ms": 226824,
+    "query_pass": 21,
+    "query_fail": 2,
+    "safety_pass": 4,
+    "mcp_pass": 4
+  }
+}

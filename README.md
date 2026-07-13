@@ -1,20 +1,55 @@
-# AI SQL Copilot
+# SQLPilot
 
-Full-stack MVP for a PostgreSQL-first SQL copilot with a local LLM path.
+SQLPilot is a chat-first data assistant for PostgreSQL. Users describe what they want in plain language, and the app turns that into safe data actions, returns the result in chat, and keeps SQL available only when needed.
 
-Implemented:
+## Current State
 
-- Schema-aware natural language to SQL scaffold
-- SQL explanation
-- SQL optimization hints
-- Read-only SQL safety checks
-- Before/after execution hooks
-- Query result summaries and visualization suggestions
-- SQLite-backed connection profiles, schema snapshots, query history, and preferences
-- PostgreSQL schema introspection and read-only execution
-- Ollama-backed local LLM adapter with deterministic fallback
-- FastAPI-compatible route handlers
-- Next.js SQL workbench frontend
+Implemented today:
+
+- Chat-first natural language workflow
+- Result-first answers with optional SQL visibility
+- PostgreSQL connection management
+- CSV import into a real table in the connected database
+- URL-based CSV import
+- Schema introspection
+- SQL generation with schema context
+- SQL explanation and optimization helpers
+- Read-only safety checks before execution
+- Query execution and result summaries
+- Query history and preference storage
+- MCP server for SQL and database tool access
+- Session cleanup for imported datasets on backend shutdown
+- Auto-launch dev stack with browser open on macOS
+
+Not implemented yet:
+
+- ZIP archive import and extraction
+- Multi-database support beyond PostgreSQL
+- Write actions without explicit confirmation
+
+## How It Works
+
+1. The user connects a PostgreSQL database.
+2. The app loads the schema.
+3. The user imports CSV data or asks a question about connected data.
+4. SQLPilot decides the right read-only action.
+5. Safety checks run before execution.
+6. The backend executes the query.
+7. The answer returns in chat, with SQL hidden unless requested.
+
+Imported CSV data is stored as a real table in PostgreSQL. The app also stores metadata such as connections, schema snapshots, query history, and preferences in the local app database `ai_sql_copilot.db`.
+
+Imported dataset tables are treated as session data and are deleted when the backend session ends normally.
+
+## Tech Stack
+
+- Backend: Python, FastAPI, PostgreSQL, SQLAlchemy, Pydantic, sqlglot
+- LLM: local Ollama
+- Frontend: Next.js, React, TypeScript
+- UI helpers: Monaco Editor, Recharts
+- MCP: stdio server exposing SQL and database tools
+
+## Local Setup
 
 Install backend dependencies:
 
@@ -28,119 +63,85 @@ Configure environment:
 cp .env.example .env
 ```
 
-Start Ollama and make sure the configured model exists:
+Start Ollama and pull the configured model:
 
 ```sh
 /Applications/Ollama.app/Contents/Resources/ollama pull qwen2.5-coder:1.5b
 ```
 
-Run backend tests:
+Run the full local stack:
+
+```sh
+cd frontend
+npm run dev
+```
+
+That starts:
+
+- Backend at `http://127.0.0.1:8000`
+- Frontend at `http://127.0.0.1:3000`
+- MCP server in the same launcher session
+
+On macOS, the launcher opens the frontend in your default browser automatically.
+
+If you only want the API:
+
+```sh
+sh scripts/start_backend.sh
+```
+
+If you only want the UI:
+
+```sh
+cd frontend
+npm run dev:ui
+```
+
+If you only want the MCP server:
+
+```sh
+sh scripts/start_mcp_server.sh
+```
+
+## Testing
+
+Run the backend test suite:
 
 ```sh
 python3 -m unittest discover -s tests
 ```
 
-Run API:
+The current suite covers SQL generation, safety, dataset import, persistence, hooks, and API handler behavior.
 
-```sh
-sh scripts/start_backend.sh
-```
+## Environment Variables
 
-Run frontend:
+Key settings from `.env`:
 
-```sh
-npm --prefix frontend install
-npm --prefix frontend run dev
-```
+- `APP_DATABASE_URL` for app metadata storage
+- `OLLAMA_BASE_URL` for local model access
+- `OLLAMA_MODEL` for the Ollama model name
+- `DEFAULT_SQL_LIMIT` for exploratory query defaults
+- `STATEMENT_TIMEOUT_MS` for query timeout
+- `READ_ONLY_EXECUTION` to keep execution read-only by default
+- `PUBLIC_DEMO` to disable the local model path for hosted demo use
+- `USE_LOCAL_LLM` to toggle Ollama-backed generation
+- `CORS_ORIGINS` for frontend/backend access
 
-Run the full local stack:
+## MCP
 
-```sh
-sh scripts/start_dev_stack.sh
-```
+The MCP server is a tool bridge, not the model itself. It exposes actions such as:
 
-That starts:
+- list connections
+- read and refresh schema
+- generate SQL
+- explain SQL
+- optimize SQL
+- check safety
+- inspect query history
+- execute SQL against the target database or app metadata database
 
-- backend on `http://127.0.0.1:8000`
-- frontend on `http://127.0.0.1:3000`
-- MCP server in the same launcher session
+## Notes
 
-If `npm` is missing, the launcher still starts the backend and MCP server, but it cannot start the frontend until Node is installed.
-On macOS, the launcher opens the app in your default browser automatically.
-Set `OPEN_BROWSER=false` to disable that behavior.
-
-For UI-only frontend development, run:
-
-```sh
-npm --prefix frontend run dev:ui
-```
-
-Local LLM defaults:
-
-- Ollama URL: `http://localhost:11434`
-- Model env var: `OLLAMA_MODEL`, default `qwen2.5-coder:1.5b`
-- API base env var for frontend: `NEXT_PUBLIC_API_BASE_URL`
-
-Useful local commands:
-
-```sh
-sh scripts/start_ollama.sh
-sh scripts/pull_model.sh
-sh scripts/start_backend.sh
-sh scripts/start_frontend.sh
-sh scripts/start_mcp_server.sh
-sh scripts/start_dev_stack.sh
-```
-
-Connection passwords:
-
-- The app stores the name of an environment variable, not the password itself.
-- Set that environment variable before starting the API, then use the same name in the connection form.
-
-Olist dataset import:
-
-```sh
-python3 scripts/import_olist_dataset.py --source /path/to/brazilian-ecommerce.zip --dsn postgresql://postgres@127.0.0.1:5432/ai_sql_copilot --replace
-```
-
-- `--source` can point to the Kaggle zip file or an extracted folder.
-- `--replace` reloads the Olist tables before inserting fresh rows.
-- After import, refresh schema in the app and use the `olist_*` tables for queries.
-
-Live demo rows:
-
-```sh
-python3 scripts/live_event_writer.py --dsn postgresql://postgres@127.0.0.1:5432/ai_sql_copilot_demo --count 5 --interval-seconds 2
-```
-
-Public-demo seeding:
-
-```sh
-python3 scripts/seed_public_demo.py --app-dsn postgresql://postgres@127.0.0.1:5432/ai_sql_copilot --name "Olist Demo" --host 127.0.0.1 --database ai_sql_copilot_demo --username postgres
-```
-
-Public deployment env vars:
-
-- `APP_DATABASE_URL=postgresql://...` for app metadata
-- `PUBLIC_DEMO=true` to disable the local Ollama path
-- `USE_LOCAL_LLM=false` for the hosted demo
-- `CORS_ORIGINS=https://your-frontend.vercel.app` for the backend
-- `NEXT_PUBLIC_API_BASE_URL=https://your-backend.example.com`
-
-Render backend:
-
-- Use the included [render.yaml](./render.yaml).
-- Point `APP_DATABASE_URL` at the Neon Postgres database you create.
-- Set `PUBLIC_DEMO=true` and `USE_LOCAL_LLM=false`.
-- Set `CORS_ORIGINS` to your Vercel frontend URL.
-
-Vercel frontend:
-
-- Set the project root to `frontend/`.
-- Set `NEXT_PUBLIC_API_BASE_URL` to the Render backend URL.
-- Redeploy after the backend URL is fixed.
-
-MCP server:
-
-- Run `sh scripts/start_mcp_server.sh` for a local stdio server.
-- It reuses saved Postgres connections and exposes SQL, schema, history, and admin tools.
+- Read-only actions run by default.
+- Destructive or mutating actions require explicit confirmation.
+- SQLPilot should answer in chat first, not force users to work in SQL unless they ask for it.
